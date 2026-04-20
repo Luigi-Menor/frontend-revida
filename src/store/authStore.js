@@ -12,9 +12,10 @@ export const useAuthStore = create((set) => ({
         set({ isLoading: true, error: null });
         try {
             const response = await apiClient.post('/auth/login', { email, password });
-            const { accessToken, user } = response.data;
+            const { accessToken, refreshToken, user } = response.data;
 
             localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken); // ← Guardar refresh token
             localStorage.setItem('user', JSON.stringify(user));
 
             set({ user, accessToken, isLoading: false });
@@ -30,7 +31,7 @@ export const useAuthStore = create((set) => ({
     register: async (userData) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await apiClient.post('/auth/register', userData);
+            await apiClient.post('/auth/register', userData);
             set({ isLoading: false });
             return true;
         } catch (error) {
@@ -40,9 +41,10 @@ export const useAuthStore = create((set) => ({
         }
     },
 
-    // Logout
+    // Logout — limpiar todo
     logout: () => {
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         localStorage.removeItem('user');
         set({ user: null, accessToken: null });
     },

@@ -4,6 +4,8 @@ import { Navbar } from './components/Navbar';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { FamiliesPage } from './pages/FamiliesPage';
+import { FamilyDetailPage } from './pages/FamilyDetailPage';
 import { ProtectedRoute } from './guards/ProtectedRoute';
 
 const theme = createTheme({
@@ -34,6 +36,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/families"
+            element={
+              <ProtectedRoute>
+                <FamiliesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/families/:id"
+            element={
+              <ProtectedRoute>
+                <FamilyDetailPage />
               </ProtectedRoute>
             }
           />

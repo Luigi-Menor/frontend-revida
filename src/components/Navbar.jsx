@@ -20,12 +20,27 @@ export const Navbar = () => {
     return (
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="h6" sx={{ flexGrow: 1, cursor: 'pointer' }} onClick={() => navigate('/dashboard')}>
+                <Typography
+                    variant="h6"
+                    sx={{ flexGrow: 1, cursor: 'pointer', fontWeight: 'bold' }}
+                    onClick={() => navigate('/dashboard')}
+                >
                     🌿 ReViDa
                 </Typography>
 
+                {isAuthenticated && (
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                        <Button color="inherit" onClick={() => navigate('/dashboard')}>
+                            Dashboard
+                        </Button>
+                        <Button color="inherit" onClick={() => navigate('/families')}>
+                            Familias
+                        </Button>
+                    </Box>
+                )}
+
                 {isAuthenticated ? (
-                    <Box>
+                    <Box sx={{ ml: 3 }}>
                         <Typography variant="body2" sx={{ display: 'inline', mr: 2 }}>
                             {user?.firstName}
                         </Typography>
