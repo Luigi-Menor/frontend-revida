@@ -12,7 +12,6 @@ export const Navbar = () => {
         navigate('/login');
     };
 
-    // No mostrar navbar en login/register
     if (['/login', '/register'].includes(location.pathname)) {
         return null;
     }
@@ -35,6 +34,9 @@ export const Navbar = () => {
                         </Button>
                         <Button color="inherit" onClick={() => navigate('/families')}>
                             Familias
+                        </Button>
+                        <Button color="inherit" onClick={() => navigate('/surveys/templates')}>
+                            Encuestas
                         </Button>
                     </Box>
                 )}

@@ -21,11 +21,13 @@ import {
     Typography,
 } from '@mui/material';
 import { useFamiliesStore } from '../store/familiesStore';
+import { useSurveysStore } from '../store/surveysStore';
 
 export const FamilyDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { currentFamily, isLoading, error, fetchFamilyById, addMember, updateFamily } = useFamiliesStore();
+    const { familySurveys, fetchFamilySurveys } = useSurveysStore();
 
     const [openAddMember, setOpenAddMember] = useState(false);
     const [memberData, setMemberData] = useState({
@@ -38,6 +40,12 @@ export const FamilyDetailPage = () => {
     useEffect(() => {
         if (id) {
             fetchFamilyById(id);
+        }
+    }, [id]);
+
+    useEffect(() => {
+        if (id) {
+            fetchFamilySurveys(id);
         }
     }, [id]);
 
@@ -168,6 +176,54 @@ export const FamilyDetailPage = () => {
                     </TableContainer>
                 ) : (
                     <Alert severity="info">No hay miembros registrados</Alert>
+                )}
+            </Paper>
+
+            {/* Encuestas */}
+            <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
+                <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="h5">📋 Encuestas de Diagnóstico</Typography>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => navigate(`/surveys/family/${id}`)}
+                    >
+                        + Nueva Encuesta
+                    </Button>
+                </Box>
+
+                {familySurveys && familySurveys.length > 0 ? (
+                    <TableContainer>
+                        <Table>
+                            <TableHead>
+                                <TableRow sx={{ backgroundColor: '#1B6B3A' }}>
+                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Template</TableCell>
+                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Estado</TableCell>
+                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Fecha</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {familySurveys.map((survey) => (
+                                    <TableRow key={survey.id}>
+                                        <TableCell>{survey.template?.name}</TableCell>
+                                        <TableCell>
+                                            <span style={{
+                                                padding: '4px 8px',
+                                                borderRadius: '4px',
+                                                backgroundColor: survey.status === 'completed' ? '#c8e6c9' : '#fff9c4',
+                                                color: survey.status === 'completed' ? '#2e7d32' : '#f57f17',
+                                            }}>
+                                                {survey.status === 'completed' ? '✅ Completada' : '📝 Borrador'}
+                                            </span>
+                                        </TableCell>
+                                        <TableCell>{new Date(survey.createdAt).toLocaleDateString()}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                ) : (
+                    <Alert severity="info">No hay encuestas registradas</Alert>
                 )}
             </Paper>
 

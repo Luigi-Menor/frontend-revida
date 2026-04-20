@@ -6,12 +6,14 @@ import { RegisterPage } from './pages/RegisterPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { FamiliesPage } from './pages/FamiliesPage';
 import { FamilyDetailPage } from './pages/FamilyDetailPage';
+import { SurveyTemplatesPage } from './pages/SurveyTemplatesPage';
+import { SurveyResponsePage } from './pages/SurveyResponsePage';
 import { ProtectedRoute } from './guards/ProtectedRoute';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#0D4A2A', // Verde ReViDa
+      main: '#0D4A2A',
     },
     secondary: {
       main: '#1B6B3A',
@@ -52,6 +54,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <FamilyDetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/surveys/templates"
+            element={
+              <ProtectedRoute>
+                <SurveyTemplatesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/surveys/family/:familyId"
+            element={
+              <ProtectedRoute>
+                <SurveyResponsePage />
               </ProtectedRoute>
             }
           />
