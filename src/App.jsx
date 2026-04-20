@@ -8,6 +8,8 @@ import { FamiliesPage } from './pages/FamiliesPage';
 import { FamilyDetailPage } from './pages/FamilyDetailPage';
 import { SurveyTemplatesPage } from './pages/SurveyTemplatesPage';
 import { SurveyResponsePage } from './pages/SurveyResponsePage';
+import { CasesPage } from './pages/CasesPage';
+import { CaseDetailPage } from './pages/CaseDetailPage';
 import { ProtectedRoute } from './guards/ProtectedRoute';
 
 const theme = createTheme({
@@ -73,6 +75,8 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/cases" element={<ProtectedRoute><CasesPage /></ProtectedRoute>} />
+          <Route path="/cases/:id" element={<ProtectedRoute><CaseDetailPage /></ProtectedRoute>} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </Router>

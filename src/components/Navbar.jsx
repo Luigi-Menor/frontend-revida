@@ -38,6 +38,9 @@ export const Navbar = () => {
                         <Button color="inherit" onClick={() => navigate('/surveys/templates')}>
                             Encuestas
                         </Button>
+                        <Button color="inherit" onClick={() => navigate('/cases')}>
+                            Casos
+                        </Button>
                     </Box>
                 )}
 
